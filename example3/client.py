@@ -1,7 +1,15 @@
+import os
+from pathlib import Path
+
 import httpx
 from anthropic import Anthropic
+from dotenv import load_dotenv
 
-API_KEY = "API_TOKEN"
+load_dotenv(Path(__file__).with_name(".env"))
+
+API_KEY = os.getenv("ANTHROPIC_API_KEY")
+if not API_KEY:
+    raise RuntimeError("ANTHROPIC_API_KEY is not set in example2/.env")
 
 def clean_sdk_headers(request: httpx.Request) -> None:
     """Remove SDK metadata for compatible proxies that reject it."""
@@ -20,19 +28,3 @@ client = Anthropic(
     base_url="https://api.cheat-ai.shop",
     http_client=http_client,
 )
-
-
-user_input = input()
-
-message = client.messages.create(
-    max_tokens=1024,
-    messages=[
-        {
-            "role": "user",
-            "content": user_input,
-        }
-    ],
-    model="claude-opus-4-8",
-)
-
-print(message.content)
