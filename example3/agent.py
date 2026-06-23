@@ -1,10 +1,16 @@
 import sys
+from pathlib import Path
 
 from anthropic import beta_tool
 
 from client import client
 from tools.math_tool import math_tool
 from tools.math_tool import math_tool_desc
+
+
+SYSTEM_PROMPT = (
+    Path(__file__).with_name("prompts") / "agent.md"
+).read_text(encoding="utf-8").strip()
 
 
 def run_math_tool(expression: str) -> str:
@@ -27,6 +33,7 @@ def main() -> None:
     message = client.messages.create(
         max_tokens=1024,
         model="claude-opus-4-8",
+        system=SYSTEM_PROMPT,
         tools=tools,
         tool_choice={"type": "tool", "name": registered_math_tool.name},
         messages=[
