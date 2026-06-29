@@ -8,7 +8,7 @@ def clean_sdk_headers(request: httpx.Request) -> None:
     for name in list(request.headers):
         if name.lower().startswith("x-stainless-"):
             del request.headers[name]
-    request.headers["user-agent"] = "excel-code-agent/0.1"
+    request.headers["user-agent"] = "test-agent/0.1"
 
 http_client = httpx.Client(
     event_hooks={"request": [clean_sdk_headers]},
@@ -20,7 +20,6 @@ client = Anthropic(
     base_url="https://api.cheat-ai.shop",
     http_client=http_client,
 )
-
 
 user_input = input()
 

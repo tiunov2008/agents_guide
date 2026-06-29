@@ -5,9 +5,10 @@ import httpx
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).with_name(".env"))
+load_dotenv()
 
 API_KEY = os.getenv("ANTHROPIC_API_KEY")
+
 if not API_KEY:
     raise RuntimeError("ANTHROPIC_API_KEY is not set in example2/.env")
 

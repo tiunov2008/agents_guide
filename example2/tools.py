@@ -5,7 +5,6 @@ from anthropic import beta_tool
 
 from client import client
 
-
 @beta_tool
 def get_weather(location: str) -> str:
     """Get the weather for a given location.
@@ -24,6 +23,16 @@ def get_weather(location: str) -> str:
     )
 
 
+def print_message(message: object) -> None:
+    for block in getattr(message, "content", []):
+        block_type = getattr(block, "type", "")
+
+        if block_type == "tool_use":
+            print(f"\n[tool] Вызван: {block.name}")
+        elif block_type == "text":
+            print(f"\n[assistant]\n{block.text}")
+
+
 def main() -> None:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -39,7 +48,7 @@ def main() -> None:
     )
 
     for message in runner:
-        print(message)
+        print_message(message)
 
 
 if __name__ == "__main__":
