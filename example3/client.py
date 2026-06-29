@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 
 import httpx
 from anthropic import Anthropic
