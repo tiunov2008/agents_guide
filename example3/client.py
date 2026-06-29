@@ -9,7 +9,7 @@ load_dotenv()
 
 API_KEY = os.getenv("ANTHROPIC_API_KEY")
 if not API_KEY:
-    raise RuntimeError("ANTHROPIC_API_KEY is not set in example2/.env")
+    raise RuntimeError("ANTHROPIC_API_KEY is not set in example3/.env")
 
 def clean_sdk_headers(request: httpx.Request) -> None:
     """Remove SDK metadata for compatible proxies that reject it."""
